@@ -1,17 +1,4 @@
 
-setwd("U:/OpenGov/Unique Reports/Finance/PayrollTax/NewData")
-
-library("xlsx")
-library("plyr")
-library("dplyr")
-library("tidyr")
-library("reshape")
-library("reshape2")
-library("stringr")
-library("zoo")
-library("lubridate")
-library("RSQLite")
-library("ggmap")
 ##################################
 ### Payroll Tax15 from KVS #######
 ##################################
