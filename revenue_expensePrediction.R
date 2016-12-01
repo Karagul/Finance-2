@@ -1,5 +1,19 @@
 
+
+setwd("U:/CityWide Performance/Finance/Rev_Exp Predict")
+
+library("xlsx", lib.loc="~/R/win-library/3.2")
+library("plyr", lib.loc="~/R/win-library/3.2")
+library("dplyr", lib.loc="~/R/win-library/3.2")
+library("tidyr", lib.loc="~/R/win-library/3.2.5")
+library("reshape", lib.loc="~/R/win-library/3.2")
+library("reshape2", lib.loc="~/R/win-library/3.2.5")
+library("stringr", lib.loc="~/R/win-library/3.2")
+library("zoo", lib.loc="~/R/win-library/3.2")
+library("lubridate", lib.loc="~/R/win-library/3.2")
+
 #Download General Fund data for fiscal years from OpenGov platform and reshape it 
+
 prediction14  <- read.csv("PredictionFY2014.csv", stringsAsFactors = FALSE, na.strings = c("", NA), header=TRUE)
 prediction14 <- prediction14%>%
     melt(id=c("Category", "Object.Type"))%>%
@@ -13,10 +27,11 @@ prediction16 <- prediction16 %>%
     melt(id=c("Category", "Object.Type"))%>%
     na.omit(prediction16)
 
+#Combine files and rename a few columns
 predictions <- do.call("rbind", list(prediction14, prediction15, prediction16))
 predictions <- rename(predictions, c("variable"= "Date", "value"="Amount"))
 
-
+#Assign fiscal month for FY 2014
 predictions <- within(predictions, {
   FiscalMonth <- NA
   FiscalMonth [Date == "July.FY.2014.Actual"] <- "7/31/13"
@@ -31,7 +46,8 @@ predictions <- within(predictions, {
   FiscalMonth [Date == "April.FY.2014.Actual"] <- "4/30/14"
   FiscalMonth [Date == "May.FY.2014.Actual"] <- "5/31/14"
   FiscalMonth [Date == "June.FY.2014.Actual"] <- "6/30/14"})
-  
+
+#Assign fiscal month for FY 2015 
 predictions <- within(predictions, {
   FiscalMonth [Date == "July.FY.2015.Actual"] <- "7/31/14"
   FiscalMonth [Date == "August.FY.2015.Actual"] <- "8/31/14"
@@ -46,6 +62,7 @@ predictions <- within(predictions, {
   FiscalMonth [Date == "May.FY.2015.Actual"] <- "5/31/15"
   FiscalMonth [Date == "June.FY.2015.Actual"] <- "6/30/15"})
 
+#Assign fiscal month for FY 2016
 predictions <- within(predictions, {
   FiscalMonth [Date == "July.FY.2016.Actual"] <- "7/31/15"
   FiscalMonth [Date == "August.FY.2016.Actual"] <- "8/31/15"
@@ -60,6 +77,7 @@ predictions <- within(predictions, {
   FiscalMonth [Date == "May.FY.2016.Actual"] <- "5/31/16"
   FiscalMonth [Date == "June.FY.2016.Actual"] <- "6/30/16"})
 
+#drop date column
 predictions$Date <- NULL
 
 write.csv(predictions, "predictions.csv", row.names = FALSE)
