@@ -1,19 +1,5 @@
 
-
-setwd("U:/CityWide Performance/Finance/Rev_Exp Predict")
-
-library("xlsx", lib.loc="~/R/win-library/3.2")
-library("plyr", lib.loc="~/R/win-library/3.2")
-library("dplyr", lib.loc="~/R/win-library/3.2")
-library("tidyr", lib.loc="~/R/win-library/3.2.5")
-library("reshape", lib.loc="~/R/win-library/3.2")
-library("reshape2", lib.loc="~/R/win-library/3.2.5")
-library("stringr", lib.loc="~/R/win-library/3.2")
-library("zoo", lib.loc="~/R/win-library/3.2")
-library("lubridate", lib.loc="~/R/win-library/3.2")
-
 #Download General Fund data for fiscal years from OpenGov platform and reshape it 
-
 prediction14  <- read.csv("PredictionFY2014.csv", stringsAsFactors = FALSE, na.strings = c("", NA), header=TRUE)
 prediction14 <- prediction14%>%
     melt(id=c("Category", "Object.Type"))%>%
