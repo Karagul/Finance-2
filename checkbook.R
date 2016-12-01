@@ -1,17 +1,4 @@
 
-
-setwd("U:/OpenGov/Unique Reports/Checkbook")
-
-library("xlsx")
-library("plyr")
-library("dplyr")
-library("tidyr")
-library("reshape")
-library("reshape2")
-library("stringr")
-library("zoo")
-library("lubridate")
-
 #read in checkbook data 
 checkbook  <-  read.csv(file="Pulled_12.01.2016.csv", header=FALSE,  stringsAsFactors = FALSE, quote = "") ## had to disable quoting
 checkbook$V10 <- NULL
